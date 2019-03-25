@@ -8,7 +8,11 @@ def run(host, port,file):
         s.connect(('127.0.0.1', 8888))
         filename = file
         s.sendall(filename.encode())
-        resp = s.recv(1024)
+        size = s.recv(10000)
+        size = size.decode()
+        size = int(size)
+        resp = s.recv(size)
+        print('파일의 크기',size)
         print('파일 내용을 출력합니다')
         print(resp.decode())
         if not resp:
@@ -18,7 +22,7 @@ def run(host, port,file):
 
             try:
                 f.write(resp)
-                resp = s.recv(1024)
+                resp = s.recv(size)
             except Exception as e:
                 print(e)
         print('파일 다운로드 성공')
