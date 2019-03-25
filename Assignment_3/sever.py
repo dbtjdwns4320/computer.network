@@ -11,10 +11,14 @@ def run_server(port=8888,file_dir = 0):
         filename = conn.recv(1024)
         filename = filename.decode()
         dir = file_dir + filename
+        size = os.path.getsize(dir)
+        size = str(size)
+        size = size.encode()
+        conn.sendall(size)
         print('파일 크기:',os.path.getsize(dir))
         with open(file_dir+filename, 'rb') as f:
             try:
-                data = f.read(1024)
+                data = f.read(os.path.getsize(dir)))
                 conn.sendall(data)
                 print('파일 전송완료')
             except Exception as e:
