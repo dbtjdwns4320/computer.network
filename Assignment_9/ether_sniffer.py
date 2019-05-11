@@ -90,7 +90,7 @@ def sniffing(nic):
 		data, _ = sniffe_sock.recvfrom(65535)
 		ethernet_header = make_ethernet_header(data[:ETH_SIZE])
 
-		IP_SIZE  = ip_header_length(data[ETH_SIZE])
+		IP_SIZE  = ip_header_length(data[ETH_SIZE]) # ip 헤더 길이를 계산 한다
 		IP_SIZE = IP_SIZE + ETH_SIZE
 		
 		ip_header = make_ip_header(data[ETH_SIZE:IP_SIZE])
