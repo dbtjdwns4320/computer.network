@@ -18,23 +18,31 @@ def make_ethernet_header(raw_data):
 	  
 		
 def make_ip_header(raw2_data):
-	ip = struct.unpack('!BBHHBBBBH4B4B',raw2_data)
+	ip = struct.unpack('!BBHHHBBH4B4B',raw2_data)
 	print('\nIp_Header')
 	temp = ip[0]
 	temp = hex(temp)
 	temp = str(temp)
+	temp_2 = bin(ip[4])
+	
+	temp_2_flag =temp_2[2:4]
+	temp_2_off = temp_2[4:17]
+	#print(temp_2_flag)
+	#print(temp_2_off)
+	temp_2_flag = int(temp_2_flag)
+	temp_2_off = int(temp_2_off)
 	return{'[version]':'%s' % temp[2],
 		'[header_length]':'%s' % temp[3],
 		'[tos]':'%x' % ip[1],
 		'[total_length]':'%d' % ip[2],
 		'[ID]':'%d' % ip[3],
-		'[flag]':'%x' % ip[4],
-		'[Fragment offset]':'%x' % ip[5],
-		'[TTL]':ip[6],
-		'[Protocal]':ip[7],
-		'[checksum]':ip[8],
-		'[src]':'%d:%d:%d:%d' % ip[9:13],
-		'[dst]':'%d:%d:%d:%d' % ip[13:17]}
+		'[flag]':'%03d' % temp_2_flag ,
+		'[Fragment offset]':'%d' % temp_2_off ,
+		'[TTL]':ip[5],
+		'[Protocal]':ip[6],
+		'[checksum]':ip[7],
+		'[src]':'%d:%d:%d:%d' % ip[8:12],
+		'[dst]':'%d:%d:%d:%d' % ip[12:16]}
 	
 def dumpcode(buf):
 	print("\n")
@@ -108,6 +116,5 @@ if __name__ == '__main__':
 	parser.add_argument('-i', type=str, required=True, metavar='NIC name', help='NIC name')
 	args = parser.parse_args()
 
-	
-	sniffing(args.i)
-
+	while True:
+		sniffing(args.i)
