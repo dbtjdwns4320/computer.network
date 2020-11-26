@@ -1,6 +1,2 @@
-# term project
- 사진파일 첨부
- 비고 및 고찰 첨부
- 팀명: c+ 이라도가자
- 조:유성준(2017037035) 김경민(2017037028)
+# Reference NETWORK project
  
